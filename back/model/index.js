@@ -11,12 +11,12 @@ const TodoSchema = new Schema({
   title: { type: String, require: true },
   list: [
     {
-      content: { type: String, default: null },
-      isComplete: { type: Boolean, default: false },
-      createdAt: { type: Date, default: new Date },
-      completeAt: { type: Date, default: null }
+      item: { type: String, default: null },
+      isComplete: { type: Boolean, default: false }
     }
-  ]
+  ],
+  createdAt: { type: Date, default: new Date },
+  completeAt: { type: Date, default: null }
 }, { collection: 'todo' });
 
 const Auth = mongoose.model('Auth', AuthSchema);
