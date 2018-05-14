@@ -55,6 +55,7 @@ class CheckBox extends Component {
 
     this.handleCheckbox = this.handleCheckbox.bind(this);
     this.handleItem = this.handleItem.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -77,15 +78,20 @@ class CheckBox extends Component {
     this.props.onWrite(index, value);
   }
 
+  handleDelete() {
+    let index = this.state.index;
+    this.props.onDelete(index);
+  }
+
   render() {
     return (
       <li>
         <Item>
           <input onChange={this.handleCheckbox} id={this.props.onIndex} type="checkbox" className="filled-in" defaultChecked={this.props.isComplete} />
           <label for={this.props.onIndex}>
-            <input onChange={this.handleItem} placeholder="EMPTY CHECK ITEM" type="text" value={this.props.item} />
+            <input onChange={this.handleItem} value={this.props.item} placeholder="EMPTY CHECK ITEM" type="text" />
           </label>
-          <a className="waves-effect waves-light red darken-1 btn"><i className="material-icons">close</i></a>
+          <a onClick={this.handleDelete} className="waves-effect waves-light red darken-1 btn"><i className="material-icons">close</i></a>
         </Item>
       </li>
     );
