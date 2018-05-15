@@ -87,7 +87,7 @@ class CheckBox extends Component {
     return (
       <li>
         <Item>
-          <input onChange={this.handleCheckbox} id={this.props.onIndex} type="checkbox" className="filled-in" defaultChecked={this.props.isComplete} />
+          <input onChange={this.handleCheckbox} id={this.props.onIndex} type="checkbox" className="filled-in" checked={this.props.isComplete} />
           <label for={this.props.onIndex}>
             <input onChange={this.handleItem} value={this.props.item} placeholder="EMPTY CHECK ITEM" type="text" />
           </label>

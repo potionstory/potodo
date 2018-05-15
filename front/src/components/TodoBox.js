@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Progress from './Progress';
 import CheckBox from './CheckBox';
 import styled from 'styled-components';
 import update from 'react-addons-update';
@@ -179,21 +180,9 @@ class TodoBox extends Component {
       return x + (y.isComplete ? 1 : 0);
     }, 0);
 
-    let rate = Math.floor(count / this.state.list.length * 100);
-
-    const progress = (
-      <div className={`${rate != 100 ? 'orange-text darken-4' : 'light-green-text darken-1'}`}>
-        <span className="left">{`${rate}%`}</span>
-        <span className="right">{`${count}/${this.state.list.length}`}</span>
-        <div className="progress amber lighten-3">
-          <div className={`determinate ${rate != 100 ? 'orange darken-3"' : 'light-green darken-1'}`} style={{ width: rate + '%' }}></div>
-        </div>
-      </div>
-    )
-
     return (
       <Card>
-        {progress}
+        <Progress onCount={count} onLength={this.state.list.length} />
         <div className="card amber darken-3">
           <div className="card-content white-text">
             <div className="card-title input-field">
