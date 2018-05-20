@@ -3,7 +3,7 @@ const { Auth } = require('model');
 exports.find = (req, res) => {
   Auth.find({}).exec((error, data) => {
     if (error) throw new Error(error);
-    res.send(`<pre>${data}</pre>`);
+    res.send(data);
   });
 }
 
@@ -12,7 +12,7 @@ exports.findOne = (req, res) => {
 
   Auth.findOne({ _id }).exec((error, data) => {
     if (error) throw new Error(error);
-    res.send(`<pre>${data}</pre>`);
+    res.send(data);
   });
 }
 
@@ -23,7 +23,7 @@ exports.create = (req, res) => {
 
   auth.save((error, data) => {
     if (error) throw new Error(error);
-    res.send(`<pre>${data}</pre>`);
+    res.send(data);
   });
 }
 
@@ -33,7 +33,7 @@ exports.update = (req, res) => {
 
   Auth.update({ _id }, data).exec((error, data) => {
     if (error) throw new Error(error);
-    res.send(`<pre>${data}</pre>`);
+    res.send(data);
   });
 }
 
@@ -42,6 +42,6 @@ exports.remove = (req, res) => {
   
   Auth.remove({ _id }).exec((error, data) => {
     if (error) throw new Error(error);
-    res.send(`<pre>${data}</pre>`);
+    res.send(data);
   });
 }

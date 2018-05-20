@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as authActions from '../store/modules/Auth';
-import * as systemActions from '../store/modules/System';
+import * as todoActions from '../store/modules/Todo';
 
 import HomeView from '../views/HomeView';
 import TodoView from '../views/TodoView';
@@ -28,8 +28,8 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    isLoading: state.System.isLoading,
-    data: state.System.data,
+    isLoading: state.Todo.isLoading,
+    data: state.Todo.data,
     isLogind: state.Auth.isLogin
   }
 }
@@ -37,7 +37,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     AuthActions: bindActionCreators(authActions, dispatch),
-    SystemActions: bindActionCreators(systemActions, dispatch)
+    todoActions: bindActionCreators(todoActions, dispatch)
   }
 }
 

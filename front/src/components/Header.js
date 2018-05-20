@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
+import * as authActions from '../store/modules/Auth';
 
 const Header = styled.header`
   position: fixed;
@@ -67,32 +70,61 @@ const Header = styled.header`
   }
 `;
 
-const HeaderComponent = (props) => {
-  return (
-    <Header>
-      <h1><Link to="/">TO<i className="material-icons">check_box</i>DO</Link></h1>
-      <div className="left">
-        <ul>
-          <li>
-            <a className="waves-effect waves-light btn-flat white"><i className="material-icons amber-text text-darken-3">info</i></a>
-          </li>
-          <li>
-            <a className="waves-effect waves-light btn-flat white"><i className="material-icons amber-text text-darken-3">star</i></a>
-          </li>
-        </ul>
-      </div>
-      <div className="right">
-        <ul>
-          <li>
-            <a className="waves-effect waves-light btn-flat white"><i className="material-icons amber-text text-darken-3">add</i></a>
-          </li>
-          <li>
-            <a className="waves-effect waves-light btn-flat white"><i className="material-icons amber-text text-darken-3">account_circle</i></a>
-          </li>
-        </ul>
-      </div>
-  </Header>
-  );
+class HeaderComponent extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  handleChange = () => {
+    const { TodoActions } = this.props;
+  }
+
+  render () {
+
+    return (
+      <Header>
+        <h1><Link to="/">TO<i className="material-icons">check_box</i>DO</Link></h1>
+        <div className="left">
+          <ul>
+            <li>
+              <a className="waves-effect waves-light btn-flat white"><i className="material-icons amber-text text-darken-3">info</i></a>
+            </li>
+            <li>
+              <a className="waves-effect waves-light btn-flat white"><i className="material-icons amber-text text-darken-3">star</i></a>
+            </li>
+          </ul>
+        </div>
+        <div className="right">
+          <ul>
+            <li>
+              <a className="waves-effect waves-light btn-flat white"><i className="material-icons amber-text text-darken-3">add</i></a>
+            </li>
+            <li>
+              <a className="waves-effect waves-light btn-flat white"><i className="material-icons amber-text text-darken-3">account_circle</i></a>
+            </li>
+            <li>
+              <a className="waves-effect waves-light btn-flat white" onClick={this.handleChange}><i className="material-icons amber-text text-darken-3">account_circle</i></a>
+            </li>
+          </ul>
+          {this.props.isLoading ? 'ddddd' : 'eeeeee'}
+        </div>
+      </Header>
+    );
+  }
 }
 
-export default HeaderComponent;
+const mapStateToProps = state => {
+  return {
+    isLogind: state.Auth.isLogin
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    AuthActions: bindActionCreators(authActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);

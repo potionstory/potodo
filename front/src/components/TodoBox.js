@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Progress from './Progress';
 import CheckBox from './CheckBox';
 import styled from 'styled-components';
 import update from 'react-addons-update';
+import * as todoActions from '../store/modules/Todo';
 
 const Card = styled.div`
   display: inline-block;
@@ -209,4 +212,16 @@ class TodoBox extends Component {
   }
 }
 
-export default TodoBox;
+const mapStateToProps = state => {
+  return {
+    list: state.Todo.list
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    TodoActions: bindActionCreators(todoActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoBox);

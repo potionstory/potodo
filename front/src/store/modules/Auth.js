@@ -1,4 +1,4 @@
-import { createAction, handleAction, handleActions } from 'redux-actions';
+import { createAction, handleActions } from 'redux-actions';
 import { Pender } from 'redux-pender';
 import update from 'react-addons-update';
 import axios from 'axios';
