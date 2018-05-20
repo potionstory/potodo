@@ -84,11 +84,12 @@ class CheckBox extends Component {
   }
 
   render() {
+    console.log(this.props.id);
     return (
       <li>
         <Item>
-          <input onChange={this.handleCheckbox} id={this.props.onIndex} type="checkbox" className="filled-in" checked={this.props.isComplete} />
-          <label for={this.props.onIndex}>
+          <input onChange={this.handleCheckbox} id={`${this.props.todoIndex}-${this.props.onIndex}`} type="checkbox" className="filled-in" checked={this.props.isComplete} />
+          <label for={`${this.props.todoIndex}-${this.props.onIndex}`}>
             <input onChange={this.handleItem} value={this.props.item} placeholder="EMPTY CHECK ITEM" type="text" />
           </label>
           <a onClick={this.handleDelete} className="waves-effect waves-light red darken-1 btn"><i className="material-icons">close</i></a>

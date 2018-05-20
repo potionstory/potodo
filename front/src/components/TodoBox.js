@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Progress from './Progress';
 import CheckBox from './CheckBox';
 import styled from 'styled-components';
@@ -11,6 +9,7 @@ const Card = styled.div`
   display: inline-block;
   width: 400px;
   margin: 10px;
+  vertical-align: top;
   .card {
     margin: 0;
     .card-content {
@@ -98,21 +97,8 @@ class TodoBox extends Component {
     super(props);
 
     this.state = {
-      title: "Todo Project",
-      list: [
-        { 
-          item: "체크 리스트1",
-          isComplete: true
-        },
-        { 
-          item: "체크 리스트2",
-          isComplete: false
-        },
-        { 
-          item: "체크 리스트3",
-          isComplete: false
-        }
-      ]
+      title: null,
+      list: []
     };
 
     this.handleTitle = this.handleTitle.bind(this);
@@ -120,6 +106,13 @@ class TodoBox extends Component {
     this.handleWrite = this.handleWrite.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({
+      title: this.props.title,
+      list: this.props.list
+    });
   }
 
   handleTitle(e) {
@@ -195,7 +188,7 @@ class TodoBox extends Component {
               <ul>
                 {this.state.list.map((n, i) => {
                   return (
-                    <CheckBox key={i} onIndex={i} onCheck={this.handleCheck} onWrite={this.handleWrite} onDelete={this.handleDelete} item={n.item} isComplete={n.isComplete} />
+                    <CheckBox key={i} onIndex={i} todoIndex={this.props.onIndex} onCheck={this.handleCheck} onWrite={this.handleWrite} onDelete={this.handleDelete} item={n.item} isComplete={n.isComplete} />
                   )
                 })}
               </ul>
@@ -212,16 +205,4 @@ class TodoBox extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    list: state.Todo.list
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    TodoActions: bindActionCreators(todoActions, dispatch)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoBox);
+export default TodoBox;

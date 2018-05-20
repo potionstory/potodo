@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
-import { Map, List, fromJS } from 'immutable';
 import { pender } from 'redux-pender';
+import update from 'react-addons-update';
 import axios from 'axios';
 
 const CHANGE = 'todo/CHANGE';
@@ -15,29 +15,32 @@ export const create = createAction(CREATE, data => axios.post(`http://localhost:
 export const update2 = createAction(UPDATE, (_id, data) => axios.put(`http://localhost:8080/todo/${_id}`, data));
 export const remove = createAction(REMOVE, _id => axios.delete(`http://localhost:8080/todo/${_id}`));
 
-const init = Map({
-  list: List([])
-});
+const init = {
+  list: []
+};
 
 export default handleActions({
   [CHANGE]: (state, action) => {
     const { key, _id } = action.payload;
-    return state.update('list', list => list.map(item => {
-      if (item.get('_id') === _id) return item.set('open', key);
-      return item.set('open', false);
+    return update(state, state.list.map(item => {
+      if (item._id === _id) return item.open = key;
+      return item.open = false;
     }));
   },
   ...pender({
     type: FIND,
     onSuccess: (state, action) => {
       console.log('FIND');
+      console.log(state);
 
-      const { payload: { data} } = action;
-      console.log(data);
+      const { payload: { data } } = action;
       const newList = data.map((item) => {
         return Object.assign(item, { open: false });
       });
-      return state.set('list', fromJS(newList));
+      console.log(newList);
+      return state = {
+        list: newList
+      };
     }
   }),
   ...pender({

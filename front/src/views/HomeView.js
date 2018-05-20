@@ -25,11 +25,14 @@ class HomeView extends Component {
   }
 
   render() {
-    console.dir(this.props.list);
     return (
       <Layout>
         <Container>
-          <TodoBox />
+          {this.props.list.map((n, i) => {
+            return (
+              <TodoBox key={n._id} onIndex={i} title={n.title} list={n.list} />
+            )
+          })}
         </Container>
       </Layout>
     );
@@ -38,7 +41,7 @@ class HomeView extends Component {
 
 const mapStateToProps = state => {
   return {
-    list: state.Todo.get('list').toJS()
+    list: state.Todo.list
   }
 }
 
