@@ -108,7 +108,6 @@ class HeaderComponent extends Component {
               <a className="waves-effect waves-light btn-flat white" onClick={this.handleChange}><i className="material-icons amber-text text-darken-3">account_circle</i></a>
             </li>
           </ul>
-          {this.props.isLoading ? 'ddddd' : 'eeeeee'}
         </div>
       </Header>
     );
