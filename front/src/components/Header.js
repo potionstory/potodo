@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
-import * as authActions from '../store/modules/Auth';
 
 const Header = styled.header`
   position: fixed;
@@ -77,10 +76,6 @@ class HeaderComponent extends Component {
     this.state = {};
   }
 
-  handleChange = () => {
-    const { TodoActions } = this.props;
-  }
-
   render () {
 
     return (
@@ -104,9 +99,6 @@ class HeaderComponent extends Component {
             <li>
               <a className="waves-effect waves-light btn-flat white"><i className="material-icons amber-text text-darken-3">account_circle</i></a>
             </li>
-            <li>
-              <a className="waves-effect waves-light btn-flat white" onClick={this.handleChange}><i className="material-icons amber-text text-darken-3">account_circle</i></a>
-            </li>
           </ul>
         </div>
       </Header>
@@ -114,16 +106,4 @@ class HeaderComponent extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    isLogind: state.Auth.isLogin
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    AuthActions: bindActionCreators(authActions, dispatch)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);
+export default HeaderComponent;
