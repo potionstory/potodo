@@ -6,13 +6,13 @@ import axios from 'axios';
 const CHANGE = 'todo/CHANGE';
 const FIND = 'todo/FIND';
 const CREATE = 'todo/CREATE';
-const UPDATE = 'todo/UPDATE';
+const SAVE = 'todo/SAVE';
 const REMOVE = 'todo/REMOVE';
 
 export const change = createAction(CHANGE);
 export const find = createAction(FIND, () => axios.get(`http://localhost:8080/todo`));
 export const create = createAction(CREATE, data => axios.post(`http://localhost:8080/todo`, data));
-export const update2 = createAction(UPDATE, (_id, data) => axios.put(`http://localhost:8080/todo/${_id}`, data));
+export const save = createAction(SAVE, (_id, data) => axios.put(`http://localhost:8080/todo/${_id}`, data));
 export const remove = createAction(REMOVE, _id => axios.delete(`http://localhost:8080/todo/${_id}`));
 
 const init = {
@@ -31,7 +31,6 @@ export default handleActions({
     type: FIND,
     onSuccess: (state, action) => {
       console.log('FIND');
-      console.log(state);
 
       const { payload: { data } } = action;
       const newList = data.map((item) => {
@@ -52,9 +51,9 @@ export default handleActions({
     }
   }),
   ...pender({
-    type: UPDATE,
+    type: SAVE,
     onSuccess: (state, action) => {
-      console.log('UPDATE');
+      console.log('SAVE');
 
       return state;
     }

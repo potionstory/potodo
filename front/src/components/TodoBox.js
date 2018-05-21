@@ -3,7 +3,6 @@ import Progress from './Progress';
 import CheckBox from './CheckBox';
 import styled from 'styled-components';
 import update from 'react-addons-update';
-import * as todoActions from '../store/modules/Todo';
 
 const Card = styled.div`
   display: inline-block;
@@ -102,10 +101,12 @@ class TodoBox extends Component {
     };
 
     this.handleTitle = this.handleTitle.bind(this);
-    this.handleCheck = this.handleCheck.bind(this);
-    this.handleWrite = this.handleWrite.bind(this);
-    this.handleAdd = this.handleAdd.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
+    this.handleItemCheck = this.handleItemCheck.bind(this);
+    this.handleItemTitle = this.handleItemTitle.bind(this);
+    this.handleItemAdd = this.handleItemAdd.bind(this);
+    this.handleItemDelete = this.handleItemDelete.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
 
   componentDidMount() {
@@ -122,7 +123,7 @@ class TodoBox extends Component {
     });
   }
 
-  handleCheck(index, isCheck) {
+  handleItemCheck(index, isCheck) {
     this.setState({
       list: update(
         this.state.list,
@@ -135,7 +136,7 @@ class TodoBox extends Component {
     });
   }
 
-  handleWrite(index, value) {
+  handleItemTitle(index, value) {
     this.setState({
       list: update(
         this.state.list,
@@ -148,7 +149,7 @@ class TodoBox extends Component {
     });
   }
 
-  handleAdd() {
+  handleItemAdd() {
     this.setState({
       list: [
         ...this.state.list,
@@ -160,7 +161,7 @@ class TodoBox extends Component {
     });
   }
 
-  handleDelete(index) {
+  handleItemDelete(index) {
     this.setState({
       list: update(
         this.state.list,
@@ -169,6 +170,14 @@ class TodoBox extends Component {
         }
       )
     });
+  }
+
+  handleSave() {
+    this.props.onSave(this.props.onId, this.state);
+  }
+
+  handleRemove() {
+    this.props.onRemove(this.props.onId);
   }
 
   render() {
@@ -182,21 +191,21 @@ class TodoBox extends Component {
         <div className="card amber darken-3">
           <div className="card-content white-text">
             <div className="card-title input-field">
-              <input onChange={this.handleTitle} value={this.state.title} placeholder="TODO TITLE" type="text" className="validate" />
+              <input onChange={this.handleTitle} value={this.state.title ? this.state.title : ""} placeholder="TODO TITLE" type="text" className="validate" />
             </div>
             <div className="card-list">
               <ul>
                 {this.state.list.map((n, i) => {
                   return (
-                    <CheckBox key={i} onIndex={i} todoIndex={this.props.onIndex} onCheck={this.handleCheck} onWrite={this.handleWrite} onDelete={this.handleDelete} item={n.item} isComplete={n.isComplete} />
+                    <CheckBox key={i} onIndex={i} todoIndex={this.props.onIndex} onCheck={this.handleItemCheck} onTitle={this.handleItemTitle} onDelete={this.handleItemDelete} item={n.item} isComplete={n.isComplete} />
                   )
                 })}
               </ul>
-              <a onClick={this.handleAdd} className="waves-effect waves-light light-blue darken-1 btn"><i className="material-icons">check_box_outline_blank</i>ADD CEHCK ITEM</a>
+              <a onClick={this.handleItemAdd} className="waves-effect waves-light light-blue darken-1 btn"><i className="material-icons">check_box_outline_blank</i>ADD CEHCK ITEM</a>
             </div>
             <div className="card-action">
-              <a className="waves-effect waves-light light-green darken-1 btn"><i className="material-icons">save</i>SAVE</a>
-              <a className="waves-effect waves-light red darken-1 btn"><i className="material-icons">delete_forever</i>DELETE</a>
+              <a onClick={this.handleSave} className="waves-effect waves-light light-green darken-1 btn"><i className="material-icons">save</i>SAVE</a>
+              <a onClick={this.handleRemove} className="waves-effect waves-light red darken-1 btn"><i className="material-icons">delete_forever</i>DELETE</a>
             </div>
           </div>
         </div>

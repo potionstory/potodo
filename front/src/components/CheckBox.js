@@ -75,7 +75,7 @@ class CheckBox extends Component {
     let index = this.state.index;
     let value = e.target.value;
 
-    this.props.onWrite(index, value);
+    this.props.onTitle(index, value);
   }
 
   handleDelete() {
@@ -84,7 +84,6 @@ class CheckBox extends Component {
   }
 
   render() {
-    console.log(this.props.id);
     return (
       <li>
         <Item>

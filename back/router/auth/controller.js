@@ -18,7 +18,6 @@ exports.findOne = (req, res) => {
 
 exports.create = (req, res) => {
   const data = req.body;
-  console.log(data);
   const auth = new Auth(data);
 
   auth.save((error, data) => {

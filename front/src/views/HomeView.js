@@ -9,6 +9,24 @@ import * as todoActions from '../store/modules/Todo';
 
 const Container = styled.div`
   padding: 90px 40px;
+  .box-add {
+    display: inline-block;
+    width: 400px;
+    height: 200px;
+    margin: 10px;
+    vertical-align: top;
+    text-align: center;
+    line-height: 200px;
+    .btn-floating {
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      i {
+        font-size: 5rem;
+        vertical-align: middle;
+      }
+    }
+  }
 `;
 
 class HomeView extends Component {
@@ -16,7 +34,13 @@ class HomeView extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      list: []
+    };
+
+    this.handleCreate = this.handleCreate.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   };
 
   componentDidMount() {
@@ -24,15 +48,43 @@ class HomeView extends Component {
     TodoActions.find();
   }
 
+  handleCreate = async () => {
+    const { TodoActions } = this.props;
+    const data = {
+      title: "",
+      list: []
+    };
+    await TodoActions.create(data);
+    await TodoActions.find();
+  }
+
+  handleSave = async (id, data) => {
+    const { TodoActions } = this.props;
+
+    await TodoActions.save(id, data);
+    await TodoActions.find();
+  }
+
+  handleRemove = async (id) => {
+    const { TodoActions } = this.props;
+
+    await TodoActions.remove(id);
+    await TodoActions.find();
+  }
+
   render() {
+
     return (
       <Layout>
         <Container>
           {this.props.list.map((n, i) => {
             return (
-              <TodoBox key={n._id} onIndex={i} title={n.title} list={n.list} />
+              <TodoBox key={n._id} onId={n._id} onIndex={i} onSave={this.handleSave} onRemove={this.handleRemove} title={n.title} list={n.list} />
             )
           })}
+          <div className="box-add">
+            <a onClick={this.handleCreate} className="btn-floating btn-large waves-effect waves-light amber darken-3"><i className="material-icons">add</i></a>
+          </div>
         </Container>
       </Layout>
     );
