@@ -3,6 +3,8 @@ import { pender } from 'redux-pender';
 import update from 'react-addons-update';
 import axios from 'axios';
 
+axios.defaults.baseURL = 'http://localhost:8080';
+
 const CHANGE = 'todo/CHANGE';
 const FIND = 'todo/FIND';
 const CREATE = 'todo/CREATE';
@@ -10,10 +12,10 @@ const SAVE = 'todo/SAVE';
 const REMOVE = 'todo/REMOVE';
 
 export const change = createAction(CHANGE);
-export const find = createAction(FIND, () => axios.get(`http://localhost:8080/todo`));
-export const create = createAction(CREATE, data => axios.post(`http://localhost:8080/todo`, data));
-export const save = createAction(SAVE, (_id, data) => axios.put(`http://localhost:8080/todo/${_id}`, data));
-export const remove = createAction(REMOVE, _id => axios.delete(`http://localhost:8080/todo/${_id}`));
+export const find = createAction(FIND, () => axios.get(`/todo`));
+export const create = createAction(CREATE, data => axios.post(`/todo`, data));
+export const save = createAction(SAVE, (_id, data) => axios.put(`/todo/${_id}`, data));
+export const remove = createAction(REMOVE, _id => axios.delete(`/todo/${_id}`));
 
 const init = {
   list: []
@@ -36,7 +38,7 @@ export default handleActions({
       const newList = data.map((item) => {
         return Object.assign(item, { open: false });
       });
-      console.log(newList);
+
       return state = {
         list: newList
       };
