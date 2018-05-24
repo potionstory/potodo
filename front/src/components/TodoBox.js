@@ -76,6 +76,11 @@ const Card = styled.div`
       padding: 10px 0 0 0;
       border-top: 1px solid #fff;
       text-align: right;
+      &:after {
+        display: block;
+        clear: both;
+        content: '';
+      }
       a {
         margin-left: 10px;
         padding: 0 10px;
@@ -85,6 +90,18 @@ const Card = styled.div`
           margin-right: 10px;
           vertical-align: top;
           font-size: 1.6rem;
+        }
+      }
+      .left {
+        a {
+          display: block;
+          margin: 0;
+          padding: 0;
+          cursor: pointer;
+          i {
+            margin: 0;
+            font-size: 2.5rem;
+          }
         }
       }
     }
@@ -97,7 +114,8 @@ class TodoBox extends Component {
 
     this.state = {
       title: null,
-      list: []
+      list: [],
+      favorite: false
     };
 
     this.handleTitle = this.handleTitle.bind(this);
@@ -105,6 +123,7 @@ class TodoBox extends Component {
     this.handleItemTitle = this.handleItemTitle.bind(this);
     this.handleItemAdd = this.handleItemAdd.bind(this);
     this.handleItemDelete = this.handleItemDelete.bind(this);
+    this.handleFavorite = this.handleFavorite.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
   }
@@ -112,12 +131,14 @@ class TodoBox extends Component {
   componentDidMount() {
     this.setState({
       title: this.props.title,
-      list: this.props.list
+      list: this.props.list,
+      favorite: this.props.favorite
     });
   }
 
   handleTitle(e) {
     let value = e.target.value;
+
     this.setState({
       title: value
     });
@@ -172,6 +193,14 @@ class TodoBox extends Component {
     });
   }
 
+  handleFavorite() {
+    let favorite = !this.state.favorite;
+
+    this.setState({
+      favorite: favorite
+    });
+  }
+
   handleSave() {
     this.props.onSave(this.props.onId, this.state);
   }
@@ -204,8 +233,13 @@ class TodoBox extends Component {
               <a onClick={this.handleItemAdd} className="waves-effect waves-light light-blue darken-1 btn"><i className="material-icons">check_box_outline_blank</i>ADD CEHCK ITEM</a>
             </div>
             <div className="card-action">
-              <a onClick={this.handleSave} className="waves-effect waves-light light-green darken-1 btn"><i className="material-icons">save</i>SAVE</a>
-              <a onClick={this.handleRemove} className="waves-effect waves-light red darken-1 btn"><i className="material-icons">delete_forever</i>DELETE</a>
+              <div className="left">
+                <a onClick={this.handleFavorite}><i className="amber-text material-icons">{this.state.favorite ? "favorite" : "favorite_border"}</i></a>
+              </div>
+              <div className="right">
+                <a onClick={this.handleSave} className="waves-effect waves-light light-green darken-1 btn"><i className="material-icons">save</i>SAVE</a>
+                <a onClick={this.handleRemove} className="waves-effect waves-light red darken-1 btn"><i className="material-icons">delete_forever</i>DELETE</a>
+              </div>
             </div>
           </div>
         </div>

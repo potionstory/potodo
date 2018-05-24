@@ -12,7 +12,7 @@ const SAVE = 'todo/SAVE';
 const REMOVE = 'todo/REMOVE';
 
 export const change = createAction(CHANGE);
-export const find = createAction(FIND, () => axios.get(`/todo`));
+export const find = createAction(FIND, favoriate => axios.get(`/todo/${favoriate}`));
 export const create = createAction(CREATE, data => axios.post(`/todo`, data));
 export const save = createAction(SAVE, (_id, data) => axios.put(`/todo/${_id}`, data));
 export const remove = createAction(REMOVE, _id => axios.delete(`/todo/${_id}`));

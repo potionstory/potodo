@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
+import * as todoActions from '../store/modules/Todo';
 
 const Header = styled.header`
   position: fixed;
@@ -73,11 +74,26 @@ class HeaderComponent extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+
+    this.state = {
+      favorite: false
+    };
+
+    this.handleFavorite = this.handleFavorite.bind(this);
+  }
+
+  handleFavorite = async () => {
+    let favorite = !this.state.favorite;
+    const { TodoActions } = this.props;
+
+    this.setState({
+      favorite: favorite
+    });
+
+    await TodoActions.find(favorite);
   }
 
   render () {
-
     return (
       <Header>
         <h1><Link to="/">TO<i className="material-icons">check_box</i>DO</Link></h1>
@@ -87,7 +103,7 @@ class HeaderComponent extends Component {
               <a className="waves-effect waves-light btn-flat white"><i className="material-icons amber-text text-darken-3">info</i></a>
             </li>
             <li>
-              <a className="waves-effect waves-light btn-flat white"><i className="material-icons amber-text text-darken-3">star</i></a>
+              <a onClick={this.handleFavorite} className="waves-effect waves-light btn-flat white"><i className="material-icons amber-text text-darken-3">{this.state.favorite ? "favorite" : "favorite_border"}</i></a>
             </li>
           </ul>
         </div>
@@ -106,4 +122,16 @@ class HeaderComponent extends Component {
   }
 }
 
-export default HeaderComponent;
+const mapStateToProps = state => {
+  return {
+    list: state.Todo.list
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    TodoActions: bindActionCreators(todoActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);

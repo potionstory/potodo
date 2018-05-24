@@ -52,7 +52,8 @@ class HomeView extends Component {
     const { TodoActions } = this.props;
     const data = {
       title: "",
-      list: []
+      list: [],
+      favorite: false
     };
     await TodoActions.create(data);
     await TodoActions.find();
@@ -79,7 +80,7 @@ class HomeView extends Component {
         <Container>
           {this.props.list.map((n, i) => {
             return (
-              <TodoBox key={n._id} onId={n._id} onIndex={i} onSave={this.handleSave} onRemove={this.handleRemove} title={n.title} list={n.list} />
+              <TodoBox key={n._id} onId={n._id} onIndex={i} onSave={this.handleSave} onRemove={this.handleRemove} title={n.title} list={n.list} favorite={n.favorite}/>
             )
           })}
           <div className="box-add">
