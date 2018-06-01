@@ -35,6 +35,7 @@ class HomeView extends Component {
     super(props);
 
     this.state = {
+      isFavorite: false,
       list: []
     };
 
@@ -75,10 +76,21 @@ class HomeView extends Component {
 
   render() {
 
+    let sortList = [];
+    if (this.props.isFavorite){
+      sortList = this.props.list.sort((a, b) => {
+        return (a.favorite === b.favorite) ? 0 : a.favorite ? -1 : 1;
+      });
+    } else {
+      sortList = this.props.list.sort((a, b) => {
+        return (a.createdAt > b.createdAt)
+      });
+    }
+
     return (
       <Layout>
         <Container>
-          {this.props.list.map((n, i) => {
+          {sortList.map((n, i) => {
             return (
               <TodoBox key={n._id} onId={n._id} onIndex={i} onSave={this.handleSave} onRemove={this.handleRemove} title={n.title} list={n.list} favorite={n.favorite}/>
             )
@@ -94,6 +106,7 @@ class HomeView extends Component {
 
 const mapStateToProps = state => {
   return {
+    isFavorite: state.Todo.isFavorite,
     list: state.Todo.list
   }
 }

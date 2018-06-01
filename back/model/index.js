@@ -16,7 +16,7 @@ const TodoSchema = new Schema({
     }
   ],
   favorite: { type: Boolean, default: false },
-  createdAt: { type: Date, default: new Date },
+  createdAt: { type: Date, default: Date.now },
   completeAt: { type: Date, default: null }
 }, { collection: 'todo' });
 

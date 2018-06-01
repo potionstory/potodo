@@ -5,19 +5,22 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:8080';
 
+const FAVORITE = 'todo/favorite';
 const CHANGE = 'todo/CHANGE';
 const FIND = 'todo/FIND';
 const CREATE = 'todo/CREATE';
 const SAVE = 'todo/SAVE';
 const REMOVE = 'todo/REMOVE';
 
+export const favorite = createAction(FAVORITE);
 export const change = createAction(CHANGE);
-export const find = createAction(FIND, favoriate => axios.get(`/todo/${favoriate}`));
+export const find = createAction(FIND, () => axios.get(`/todo`));
 export const create = createAction(CREATE, data => axios.post(`/todo`, data));
 export const save = createAction(SAVE, (_id, data) => axios.put(`/todo/${_id}`, data));
 export const remove = createAction(REMOVE, _id => axios.delete(`/todo/${_id}`));
 
 const init = {
+  isFavorite: false,
   list: []
 };
 
@@ -28,6 +31,13 @@ export default handleActions({
       if (item._id === _id) return item.open = key;
       return item.open = false;
     }));
+  },
+  [FAVORITE]: (state, action) => {
+    console.log('FAVORITE');
+
+    return update(state, {
+      isFavorite: { $set: action.payload }
+    });
   },
   ...pender({
     type: FIND,

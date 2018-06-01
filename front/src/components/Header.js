@@ -82,15 +82,15 @@ class HeaderComponent extends Component {
     this.handleFavorite = this.handleFavorite.bind(this);
   }
 
-  handleFavorite = async () => {
-    let favorite = !this.state.favorite;
+  handleFavorite() {
+    let favorite = !this.props.isFavorite;
     const { TodoActions } = this.props;
 
     this.setState({
       favorite: favorite
     });
 
-    await TodoActions.find(favorite);
+    TodoActions.favorite(favorite);
   }
 
   render () {
@@ -124,7 +124,7 @@ class HeaderComponent extends Component {
 
 const mapStateToProps = state => {
   return {
-    list: state.Todo.list
+    isFavorite: state.Todo.isFavorite
   }
 }
 

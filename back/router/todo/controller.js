@@ -1,9 +1,7 @@
 const { Todo } = require('model');
 
 exports.find = (req, res) => {
-  const favorite = req.params.favorite;
-
-  Todo.find({}).sort(favorite ? {'favorite': 1} : {}).exec((error, data) => {
+  Todo.find({}).exec((error, data) => {
     if (error) throw new Error(error);
     res.send(data);
   });
