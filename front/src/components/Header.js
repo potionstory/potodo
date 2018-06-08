@@ -96,7 +96,7 @@ class HeaderComponent extends Component {
   render () {
     return (
       <Header>
-        <h1><Link to="/">TO<i className="material-icons">check_box</i>DO</Link></h1>
+        <h1><Link to="/">PO<i className="material-icons">check_box</i>TODO</Link></h1>
         <div className="left">
           <ul>
             <li>
