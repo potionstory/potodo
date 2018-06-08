@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(router);
 
-app.listen(PORT, async () => {
+app.listen((process.env.PORT || PORT), async () => {
   console.log(`server start ${PORT}`);
 
   try {

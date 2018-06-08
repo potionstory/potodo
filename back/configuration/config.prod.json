@@ -1,6 +1,6 @@
 {
   "NAME": "prod_todo",
-  "PORT": "3000",
+  "PORT": "8080",
   "USER": "potionstory",
   "PASS": "dpvlthem37"
 }
